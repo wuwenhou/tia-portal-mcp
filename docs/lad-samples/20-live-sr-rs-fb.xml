@@ -114,7 +114,6 @@
       <MemoryLayout>Optimized</MemoryLayout>
       <MemoryReserve>100</MemoryReserve>
       <Name>ZZ_LadTest_Sr</Name>
-      <Namespace />
       <Number>30</Number>
       <ProgrammingLanguage>LAD</ProgrammingLanguage>
       <SetENOAutomatically>false</SetENOAutomatically>

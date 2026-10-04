@@ -129,7 +129,6 @@
       <MemoryLayout>Optimized</MemoryLayout>
       <MemoryReserve>100</MemoryReserve>
       <Name>Faults_FB</Name>
-      <Namespace />
       <Number>2</Number>
       <ProgrammingLanguage>LAD</ProgrammingLanguage>
       <SetENOAutomatically>false</SetENOAutomatically>

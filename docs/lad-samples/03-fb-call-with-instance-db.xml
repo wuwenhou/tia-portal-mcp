@@ -69,7 +69,6 @@
       <IsIECCheckEnabled>false</IsIECCheckEnabled>
       <MemoryLayout>Optimized</MemoryLayout>
       <Name>Cyclic interrupt</Name>
-      <Namespace />
       <Number>30</Number>
       <ProgrammingLanguage>LAD</ProgrammingLanguage>
       <SecondaryType>CyclicInterrupt</SecondaryType>

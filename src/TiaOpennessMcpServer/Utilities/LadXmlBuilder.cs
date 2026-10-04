@@ -453,9 +453,10 @@ public static class LadXmlBuilder
         var attrs = new XElement("AttributeList",
             new XElement("AutoNumber", blockNumber.HasValue ? "false" : "true"),
             new XElement("Interface", new XElement(IfaceNs + "Sections", sections)),
+            // NOTE (V17): no <Namespace> element — V17 rejects it ("not supported").
+            // It was introduced with the library-namespaces feature in a later version.
             new XElement("MemoryLayout", "Optimized"),
-            new XElement("Name", blockName),
-            new XElement("Namespace"));
+            new XElement("Name", blockName));
         if (blockNumber.HasValue) attrs.Add(new XElement("Number", blockNumber.Value));
         attrs.Add(new XElement("ProgrammingLanguage", "LAD"));
         if (type == "OB") attrs.Add(new XElement("SecondaryType", "ProgramCycle"));

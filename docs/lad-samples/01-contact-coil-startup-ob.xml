@@ -65,7 +65,6 @@
       <IsIECCheckEnabled>false</IsIECCheckEnabled>
       <MemoryLayout>Optimized</MemoryLayout>
       <Name>Startup</Name>
-      <Namespace />
       <Number>100</Number>
       <ProgrammingLanguage>LAD</ProgrammingLanguage>
       <SecondaryType>Startup</SecondaryType>

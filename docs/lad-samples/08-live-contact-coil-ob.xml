@@ -68,7 +68,6 @@
       <IsIECCheckEnabled>false</IsIECCheckEnabled>
       <MemoryLayout>Optimized</MemoryLayout>
       <Name>ZZ_LadTest_Ob2</Name>
-      <Namespace />
       <Number>124</Number>
       <ProgrammingLanguage>LAD</ProgrammingLanguage>
       <SecondaryType>ProgramCycle</SecondaryType>

@@ -154,7 +154,7 @@ public static class XmlHelper
                     </Sections>
                   </Interface>
                   <Name>{SecurityElement.Escape(blockName)}</Name>
-                  <Namespace />
+                  <!-- V17: no <Namespace> element (rejected as "not supported") -->
                   <ProgrammingLanguage>DB</ProgrammingLanguage>
                 </AttributeList>
                 <ObjectList />
@@ -210,7 +210,7 @@ public static class XmlHelper
                   <InstanceOfName>{instanceOfName}</InstanceOfName>
                   <InstanceOfType>FB</InstanceOfType>
                   <Name>{name}</Name>
-                  <Namespace />{numAttr}
+                  <!-- V17: no <Namespace> element (rejected as "not supported") -->{numAttr}
                   <ProgrammingLanguage>DB</ProgrammingLanguage>
                 </AttributeList>
                 <ObjectList />   <!-- no MultilingualText: en-US would break an en-GB project -->

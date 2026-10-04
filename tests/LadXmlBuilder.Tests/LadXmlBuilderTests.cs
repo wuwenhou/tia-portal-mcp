@@ -201,14 +201,15 @@ public class LadXmlBuilderTests
     // ── block document ────────────────────────────────────────────────────────
 
     [Fact]
-    public void BlockXml_IsLadWithOneCompileUnitPerNetwork_AndNamespaceIsChildElement()
+    public void BlockXml_IsLadWithOneCompileUnitPerNetwork_AndHasNoNamespaceElement()
     {
         var xml = Block("FB", null, null, new[] { SealIn(), SealIn() });
         var doc = XDocument.Parse(xml);
         Assert.Equal(2, doc.Descendants("SW.Blocks.CompileUnit").Count());
         var fb = doc.Descendants("SW.Blocks.FB").Single();
         Assert.Equal("LAD", fb.Element("AttributeList")!.Element("ProgrammingLanguage")!.Value);
-        Assert.NotNull(fb.Element("AttributeList")!.Element("Namespace")); // child element, not an XML attribute (CLAUDE.md)
+        // V17 has no <Namespace> element — TIA V17 rejects it as "not supported".
+        Assert.Null(fb.Element("AttributeList")!.Element("Namespace"));
         Assert.Null(fb.Attribute("Namespace"));
         Assert.DoesNotContain("MultilingualText", xml); // no culture => no culture-mismatch risk
     }

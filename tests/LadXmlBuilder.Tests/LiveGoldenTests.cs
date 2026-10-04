@@ -102,8 +102,10 @@ public class LiveGoldenTests
         Assert.Equal("SW.Blocks.FB", gold.Name.LocalName);
         Assert.Equal(Edges(Flg(gold)), Edges(Flg(built)));
         Assert.Equal(SectionNames(gold), SectionNames(built));
-        Assert.Null(built.Element("AttributeList")!.Element("Namespace")!.Attribute("Name")); // child element, no attribute
-        Assert.NotNull(gold.Element("AttributeList")!.Element("Namespace"));
+        // V17 has no <Namespace> element on blocks (rejected as "not supported") —
+        // neither the builder output nor a real V17 export may contain one.
+        Assert.Null(built.Element("AttributeList")!.Element("Namespace"));
+        Assert.Null(gold.Element("AttributeList")!.Element("Namespace"));
     }
 
     [Fact]
