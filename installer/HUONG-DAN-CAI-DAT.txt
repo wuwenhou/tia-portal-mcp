@@ -1,0 +1,41 @@
+HUONG DAN CAI DAT - TIA Portal MCP V17
+=========================================
+
+1. DIEU KIEN MAY (BAT BUOC)
+---------------------------
+- TIA Portal V17 (kem Openness API / STEP 7). KHONG co TIA V17 thi app KHONG
+  chay duoc. Bo cai dat se canh bao ngay neu khong thay TIA V17.
+- .NET Framework 4.8 (co san tren Windows 10 1903+ / Windows 11).
+- WebView2 Runtime (Windows 11 co san; Windows 10 cu co the phai cai:
+  https://developer.microsoft.com/microsoft-edge/webview2/).
+
+2. CAI DAT
+----------
+- Chay TiaPortalMCP-V17-Setup.exe bang quyen Admin.
+- De nguyen task "Add the logged-on user to the 'Siemens TIA Openness' group".
+- Cai xong: DANG XUAT (Sign out) roi DANG NHAP LAI Windows (bat buoc de
+  nhan quyen nhom). Neu quen, chay lai file "them-vao-nhom-openness.cmd"
+  trong thu muc cai dat bang "Run as administrator".
+
+3. SU DUNG DASHBOARD
+--------------------
+- Mo TIA Portal V17, mo project .ap17.
+- Mo "TIA Portal Dashboard" (Desktop / Start Menu) -> bam Connect.
+- Lan dau TIA hien hop thoai xin quyen -> bam "Yes to all".
+
+4. NOI VOI CLAUDE / OPENCODE
+----------------------------
+a) Claude Desktop: mo dashboard, them connector:
+     http://localhost:5000/mcp
+   (dashboard phai dang mo).
+b) OpenCode / Claude Code (khuyen nghi): chep doan trong file
+   opencode-config.jsonc (cung thu muc cai dat) vao file cau hinh:
+     %USERPROFILE%\.config\opencode\opencode.jsonc
+   muc "mcp", sua lai duong dan exe cho dung may nay. Khong can mo
+   dashboard truoc - OpenCode tu goi exe khi can.
+
+5. GO CAI DAT
+-------------
+- Settings -> Apps -> chon "TIA Portal MCP V17" -> Uninstall.
+
+Nguon: https://github.com/wuwenhou/tia-portal-mcp (ban port V17)

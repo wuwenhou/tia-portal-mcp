@@ -1,0 +1,15 @@
+// Snippet de dan vao file cau hinh OpenCode tren may moi:
+//   %USERPROFILE%\.config\opencode\opencode.jsonc  (muc "mcp")
+//
+// - Sua lai duong dan exe cho dung thu muc cai dat tren may do.
+// - "standard" = 27 tool gon nhe; doi thanh "full" de co du 32 tool
+//   (them open_project, clone_project, generate_s7_1200...).
+// - Moi lan goi tool lan dau, TIA Portal hien hop thoai xin quyen:
+//   bam "Yes to all".
+{
+  "tia-portal": {
+    "type": "local",
+    "command": ["C:\\Program Files\\TIA Portal MCP V17\\TiaPortalDashboard.exe", "--mcp-stdio", "--profile", "standard"],
+    "enabled": true
+  }
+}

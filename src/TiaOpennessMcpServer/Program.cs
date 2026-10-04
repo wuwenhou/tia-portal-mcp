@@ -32,6 +32,21 @@ AppDomain.CurrentDomain.AssemblyResolve += (_, e) =>
     return null;
 };
 
+// ── TIA V17 installation pre-check ────────────────────────────────────────────
+// Friendly startup check for machines without TIA Portal V17: explain what is
+// missing instead of crashing with FileNotFoundException deep inside a call.
+// (TiaSearchPaths above is the single source of truth for where TIA must be.)
+bool TiaInstallPresent() =>
+    TiaSearchPaths.Any(Directory.Exists) &&
+    File.Exists(Path.Combine(TiaSearchPaths[0], "Siemens.Engineering.dll"));
+
+const string TiaMissingMessage =
+    "TIA Portal V17 is not installed on this machine (or is installed on a different drive).\n" +
+    "This app needs TIA Portal V17 with the Openness API to run.\n" +
+    "Install TIA Portal V17 first, then start this app again.\n\n" +
+    "Khong thay TIA Portal V17 tren may nay (hoac cai o o dia khac). " +
+    "Hay cai TIA Portal V17 (kem Openness API) roi mo lai app.";
+
 // ── Command line ──────────────────────────────────────────────────────────────
 bool stdioMode = Array.IndexOf(args, "--mcp-stdio") >= 0;
 
@@ -170,6 +185,10 @@ async Task OpenStartupProjectAsync()
 // ── Stdio MCP mode ────────────────────────────────────────────────────────────
 if (stdioMode)
 {
+    // Never a MessageBox here: stdout carries JSON-RPC frames, and a modal
+    // dialog would hang the host (OpenCode/Claude). Stderr only.
+    if (!TiaInstallPresent())
+        Console.Error.WriteLine("[tia-mcp] WARNING: " + TiaMissingMessage.Replace("\n", " "));
     await OpenStartupProjectAsync();
     await RunStdioAsync();
     sp.Dispose();
@@ -177,6 +196,12 @@ if (stdioMode)
 }
 
 await OpenStartupProjectAsync();
+
+// Missing TIA in dashboard mode: tell the user plainly, but still start the
+// server so the dashboard/status page is visible for diagnosis.
+if (!TiaInstallPresent())
+    MessageBox.Show(TiaMissingMessage, "TIA Portal V17 not found",
+        MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
 // ── HTTP listener ─────────────────────────────────────────────────────────────
 var listener = new HttpListener();
@@ -734,7 +759,12 @@ async Task<object?> McpDispatch(JsonElement p)
 
     switch (name)
     {
-        case "connect_to_tia_portal":  return await tia.AttachToRunningAsync();
+        case "connect_to_tia_portal":
+            if (!TiaInstallPresent())
+                throw new InvalidOperationException(
+                    "TIA Portal V17 is not installed on this machine (needs TIA Portal V17 + Openness API). " +
+                    "Chua cai TIA Portal V17 tren may nay.");
+            return await tia.AttachToRunningAsync();
         case "get_status":
             if (!tia.IsConnected) return new { connected = false };
             try   { return new { connected = true, project = await tia.GetProjectInfoAsync() }; }
