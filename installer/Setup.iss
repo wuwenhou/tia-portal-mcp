@@ -23,7 +23,7 @@ ArchitecturesInstallIn64BitMode=x64compatible
 Compression=lzma2
 SolidCompression=yes
 OutputDir={#SourcePath}\..\dist
-OutputBaseFilename=TiaPortalMCP-V17-Setup
+OutputBaseFilename=TiaPortalMCP-V17-Setup-{#MyAppVersion}
 WizardStyle=modern
 UninstallDisplayName={#MyAppName}
 ; The Siemens TIA Openness group only exists after TIA Portal is installed,
