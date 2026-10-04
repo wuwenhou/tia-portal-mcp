@@ -5,8 +5,9 @@ using Xunit;
 namespace LadTests;
 
 /// <summary>
-/// Samples 14-22 are TIA V20's re-export of arithmetic, scaling, flip-flop, counter and system-function
+/// Samples 14-22 are TIA V17's re-export of arithmetic, scaling, flip-flop, counter and system-function
 /// blocks built from these exact requests, imported and compiled live (0 errors).
+/// (Converted from the original V20/v5 exports; to be re-confirmed against a live V17 export.)
 /// </summary>
 public class BoxGoldenTests
 {

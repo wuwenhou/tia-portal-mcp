@@ -5,8 +5,9 @@ using Xunit;
 namespace LadTests;
 
 /// <summary>
-/// Samples 09-13 are TIA V20's re-export of blocks built from these exact requests, imported and
+/// Samples 09-13 are TIA V17's re-export of blocks built from these exact requests, imported and
 /// compiled live (0 errors). The builder must reproduce their wiring topology.
+/// (Converted from the original V20/v5 exports; to be re-confirmed against a live V17 export.)
 /// </summary>
 public class ElementGoldenTests
 {

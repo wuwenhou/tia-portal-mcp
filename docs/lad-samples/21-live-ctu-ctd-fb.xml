@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Document>
-  <Engineering version="V20" />
+  <Engineering version="V17" />
   <DocumentInfo>
     <Created>2026-10-01T22:11:08.0288669Z</Created>
     <ExportSetting>WithDefaults</ExportSetting>
     <InstalledProducts>
       <Product>
         <DisplayName>Totally Integrated Automation Portal</DisplayName>
-        <DisplayVersion>V20</DisplayVersion>
+        <DisplayVersion>V17</DisplayVersion>
       </Product>
       <OptionPackage>
         <DisplayName>TIA Portal Openness</DisplayName>
-        <DisplayVersion>V20</DisplayVersion>
+        <DisplayVersion>V17</DisplayVersion>
       </OptionPackage>
       <OptionPackage>
         <DisplayName>TIA Portal Version Control Interface</DisplayName>
-        <DisplayVersion>V20</DisplayVersion>
+        <DisplayVersion>V17</DisplayVersion>
       </OptionPackage>
       <Product>
         <DisplayName>SINAMICS Startdrive Advanced</DisplayName>
-        <DisplayVersion>V20</DisplayVersion>
+        <DisplayVersion>V17</DisplayVersion>
       </Product>
       <OptionPackage>
         <DisplayName>SINAMICS Startdrive G130, G150, S120, S150, SINAMICS MV, G220, S200, S210</DisplayName>
-        <DisplayVersion>V20</DisplayVersion>
+        <DisplayVersion>V17</DisplayVersion>
       </OptionPackage>
       <OptionPackage>
         <DisplayName>SINAMICS Startdrive G110M, G120, G120C, G120D, G120P, G115D</DisplayName>
-        <DisplayVersion>V20</DisplayVersion>
+        <DisplayVersion>V17</DisplayVersion>
       </OptionPackage>
       <Product>
         <DisplayName>STEP 7 Professional</DisplayName>
-        <DisplayVersion>V20</DisplayVersion>
+        <DisplayVersion>V17</DisplayVersion>
       </Product>
       <OptionPackage>
         <DisplayName>STEP 7 Safety</DisplayName>
-        <DisplayVersion>V20</DisplayVersion>
+        <DisplayVersion>V17</DisplayVersion>
       </OptionPackage>
       <Product>
         <DisplayName>WinCC Basic/Comfort/Advanced</DisplayName>
-        <DisplayVersion>V20</DisplayVersion>
+        <DisplayVersion>V17</DisplayVersion>
       </Product>
       <Product>
         <DisplayName>WinCC Unified</DisplayName>
-        <DisplayVersion>V20</DisplayVersion>
+        <DisplayVersion>V17</DisplayVersion>
       </Product>
     </InstalledProducts>
   </DocumentInfo>
@@ -54,7 +54,7 @@
       <HeaderFamily />
       <HeaderName />
       <HeaderVersion>0.1</HeaderVersion>
-      <Interface><Sections xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v5">
+      <Interface><Sections xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v4">
   <Section Name="Input">
     <Member Name="Pulse" Datatype="Bool" Remanence="NonRetain" Accessibility="Public">
       <AttributeList>
@@ -158,7 +158,7 @@
       </MultilingualText>
       <SW.Blocks.CompileUnit ID="3" CompositionName="CompileUnits">
         <AttributeList>
-          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v5">
+          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v4">
   <Parts>
     <Access Scope="LocalVariable" UId="21">
       <Symbol>
@@ -258,7 +258,7 @@
       </SW.Blocks.CompileUnit>
       <SW.Blocks.CompileUnit ID="8" CompositionName="CompileUnits">
         <AttributeList>
-          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v5">
+          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v4">
   <Parts>
     <Access Scope="LocalVariable" UId="21">
       <Symbol>

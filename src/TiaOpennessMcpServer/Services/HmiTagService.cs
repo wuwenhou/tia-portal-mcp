@@ -1,3 +1,7 @@
+// Requires WinCC Unified: the Siemens.Engineering.HmiUnified Openness API only
+// exists when the WinCC Unified option is installed. Enable by building with
+// -p:TiaHmi=true (see TiaOpennessMcpServer.csproj).
+#if HMI_UNIFIED
 using Microsoft.Extensions.Logging;
 using Siemens.Engineering;
 using Siemens.Engineering.HW;
@@ -216,3 +220,4 @@ public sealed class HmiTagService
         catch { return ""; }
     }
 }
+#endif // HMI_UNIFIED

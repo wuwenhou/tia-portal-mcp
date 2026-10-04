@@ -5,14 +5,16 @@ using Xunit;
 namespace LadTests;
 
 /// <summary>
-/// Samples 05-08 are TIA V20's own export of blocks this builder generated, imported and compiled
+/// Samples 05-08 are TIA V17's own export of blocks this builder generated, imported and compiled
 /// (0 errors) on a live project. Each test rebuilds the same block and requires the same wiring
 /// topology and block header as TIA's re-export. TIA renumbers UIds, so topology is compared, not text.
+/// (Samples were converted from the original V20/v5 exports to the V17/v4 schema; element structure
+/// for these constructs is identical. To be re-confirmed against a live V17 export.)
 /// </summary>
 public class LiveGoldenTests
 {
     private static readonly XNamespace Ns    = LadXmlBuilder.FlgNs;
-    private static readonly XNamespace IfNs  = "http://www.siemens.com/automation/Openness/SW/Interface/v5";
+    private static readonly XNamespace IfNs  = "http://www.siemens.com/automation/Openness/SW/Interface/v4";
 
     private static XDocument Sample(string file)
     {

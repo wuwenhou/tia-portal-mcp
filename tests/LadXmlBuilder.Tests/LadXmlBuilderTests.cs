@@ -149,7 +149,7 @@ public class LadXmlBuilderTests
         Assert.Contains("Access:LocalVariable:loc -> Contact.operand", edges);
     }
 
-    // ── golden / conformance against real V20 exports ─────────────────────────
+    // ── golden / conformance against real V17 exports ─────────────────────────
 
     [Fact]
     public void Golden_ContactCoil_MatchesStartupObExport()
@@ -195,7 +195,7 @@ public class LadXmlBuilderTests
             .Distinct().ToList();
 
         var unknown = emitted.Where(e => !known.Contains(e)).ToList();
-        Assert.True(unknown.Count == 0, "Pins not seen in any real V20 export: " + string.Join(", ", unknown));
+        Assert.True(unknown.Count == 0, "Pins not seen in any real V17 export: " + string.Join(", ", unknown));
     }
 
     // ── block document ────────────────────────────────────────────────────────

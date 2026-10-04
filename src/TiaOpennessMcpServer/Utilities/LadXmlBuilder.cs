@@ -103,13 +103,14 @@ public sealed class LadValidationException : Exception
 // ── Builder ───────────────────────────────────────────────────────────────────
 
 /// <summary>
-/// Emits SimaticML <c>FlgNet</c> (V20, v5 schema) for LAD networks. Element and pin names
-/// follow the real exports in docs/lad-samples/.
+/// Emits SimaticML <c>FlgNet</c> (V17, v4 schema) for LAD networks. Element and pin names
+/// follow the real exports in docs/lad-samples/. Schema versions confirmed against the
+/// official V17 XSDs (PublicAPI\V17\Schemas\: SW.PlcBlocks.LADFBD_v4, SW.InterfaceSections_v4).
 /// </summary>
 public static class LadXmlBuilder
 {
-    public static readonly XNamespace FlgNs  = "http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v5";
-    public static readonly XNamespace IfaceNs = "http://www.siemens.com/automation/Openness/SW/Interface/v5";
+    public static readonly XNamespace FlgNs  = "http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v4";
+    public static readonly XNamespace IfaceNs = "http://www.siemens.com/automation/Openness/SW/Interface/v4";
 
     private const int FirstUId = 21; // matches TIA's own exports
 
@@ -437,7 +438,7 @@ public static class LadXmlBuilder
                 members.Select(m => new XElement(IfaceNs + "Member",
                     new XAttribute("Name", m.Name), new XAttribute("Datatype", m.Datatype))));
 
-        // Confirmed against live V20: an OB only has Input/Temp/Constant; TIA rejects an Output (or InOut) section.
+        // Matches V17 behaviour (to be re-confirmed live): an OB only has Input/Temp/Constant; TIA rejects an Output (or InOut) section.
         if (type == "OB" && (iface.Output.Count > 0 || iface.InOut.Count > 0 || iface.Static.Count > 0))
             throw new ArgumentException("An OB interface can only have input, temp and constant members.");
 
@@ -482,7 +483,7 @@ public static class LadXmlBuilder
 
         var doc = new XDocument(new XDeclaration("1.0", "utf-8", null),
             new XElement("Document",
-                new XElement("Engineering", new XAttribute("version", "V20")),
+                new XElement("Engineering", new XAttribute("version", "V17")),
                 new XElement($"SW.Blocks.{type}", new XAttribute("ID", "0"), attrs, objects)));
 
         var xml = doc.Declaration + "\n" + doc.ToString();

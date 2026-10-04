@@ -15,7 +15,7 @@ Both tabs talk to the same REST server running inside the app (port 5000) and th
 
 ## Getting started
 
-1. Open your project in **TIA Portal V20**.
+1. Open your project in **TIA Portal V17**.
 2. Launch the app from your desktop shortcut (`Start TIA Dashboard.bat`).
 3. The dashboard opens in a native Windows window.
 4. Click **Connect to TIA Portal** (top of the left sidebar) — the status bar turns green and shows your project name.
@@ -119,7 +119,7 @@ Claude will call the tools automatically, show you what it's doing, and ask for 
 ### Connection tools
 
 **connect_to_tia_portal**
-Attaches to the running TIA Portal V20 process. TIA Portal must be open with a project loaded. Returns the project name and path on success.
+Attaches to the running TIA Portal V17 process. TIA Portal must be open with a project loaded. Returns the project name and path on success.
 
 **get_status**
 Returns the current connection state and, if connected, the project name and path. Use this to confirm the server is alive and connected.

@@ -12,6 +12,15 @@
     <PlatformTarget>x64</PlatformTarget>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <UseWindowsForms>true</UseWindowsForms>
+    <!-- TIA Portal target version. Set TiaHmi=true only when WinCC Unified is
+         installed (the HmiUnified Openness API does not exist in a plain
+         STEP 7 / WinCC Comfort-Advanced V17 installation). -->
+    <TiaVersion>V17</TiaVersion>
+    <TiaHmi>false</TiaHmi>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TiaHmi)' == 'true'">
+    <DefineConstants>$(DefineConstants);HMI_UNIFIED</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,12 +32,12 @@
 
   <ItemGroup>
     <Reference Include="Siemens.Engineering">
-      <HintPath>$(PROGRAMFILES)\Siemens\Automation\Portal V20\PublicAPI\V20\Siemens.Engineering.dll</HintPath>
+      <HintPath>$(PROGRAMFILES)\Siemens\Automation\Portal V17\PublicAPI\V17\Siemens.Engineering.dll</HintPath>
       <Private>False</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Siemens.Engineering.Hmi">
-      <HintPath>$(PROGRAMFILES)\Siemens\Automation\Portal V20\PublicAPI\V20\Siemens.Engineering.Hmi.dll</HintPath>
+      <HintPath>$(PROGRAMFILES)\Siemens\Automation\Portal V17\PublicAPI\V17\Siemens.Engineering.Hmi.dll</HintPath>
       <Private>False</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>

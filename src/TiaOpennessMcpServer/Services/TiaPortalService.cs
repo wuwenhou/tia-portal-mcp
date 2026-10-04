@@ -46,7 +46,7 @@ public sealed class TiaPortalService : IDisposable
     // ── Connection ────────────────────────────────────────────────────────────
 
     /// <summary>
-    /// Attaches to a TIA Portal V20 process that is already running on this machine.
+    /// Attaches to a TIA Portal V17 process that is already running on this machine.
     /// Prefers the process that has the target project open (if projectPath is supplied).
     /// </summary>
     public async Task<ProjectInfo> AttachToRunningAsync(string? projectPath = null)
@@ -56,7 +56,7 @@ public sealed class TiaPortalService : IDisposable
             var processes = TiaPortal.GetProcesses();
             if (processes.Count == 0)
                 throw new InvalidOperationException(
-                    "No running TIA Portal process found. Please open TIA Portal V20 first.");
+                    "No running TIA Portal process found. Please open TIA Portal V17 first.");
 
             _log.LogInformation("{Count} TIA Portal process(es) found — attaching…", processes.Count);
 
@@ -201,7 +201,7 @@ public sealed class TiaPortalService : IDisposable
             var dir = new DirectoryInfo(targetFolder);
             dir.Create();
             var newProject = _portal!.Projects.Create(dir, newName);
-            result.ProjectPath = Path.Combine(targetFolder, newName + ".ap20");
+            result.ProjectPath = Path.Combine(targetFolder, newName + ".ap17");
 
             // ── 4. Recreate hardware ──────────────────────────────────────────
             foreach (var (devName, typeId, ip) in deviceSnapshots)

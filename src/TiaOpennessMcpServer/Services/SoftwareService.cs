@@ -145,7 +145,7 @@ public sealed class SoftwareService
             else
             {
                 // FB/FC/OB: use ExternalSource path so TIA Portal compiles the SCL directly.
-                // PlcBlockComposition.Import() with a <Source> element is the wrong path for V20 —
+                // PlcBlockComposition.Import() with a <Source> element is the wrong path for V17 —
                 // it expects StructuredText tokens, not raw SCL base64.
                 var sclFile = Path.Combine(_opts.ExportDirectory, $"create_{deviceName}_{req.Name}.scl");
                 File.WriteAllText(sclFile, req.SourceCode, System.Text.Encoding.UTF8);

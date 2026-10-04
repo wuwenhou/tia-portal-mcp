@@ -1,3 +1,7 @@
+// Requires WinCC Unified: the Siemens.Engineering.HmiUnified Openness API only
+// exists when the WinCC Unified option is installed. Enable by building with
+// -p:TiaHmi=true (see TiaOpennessMcpServer.csproj).
+#if HMI_UNIFIED
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
 using Siemens.Engineering;
@@ -263,3 +267,4 @@ public sealed class HmiScreenService
         throw new KeyNotFoundException($"No WinCC Unified HMI software found for device '{deviceName}'.");
     }
 }
+#endif // HMI_UNIFIED

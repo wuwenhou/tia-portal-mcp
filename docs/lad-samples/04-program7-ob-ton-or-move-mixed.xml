@@ -1,49 +1,49 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Document>
-  <Engineering version="V20" />
+  <Engineering version="V17" />
   <DocumentInfo>
     <Created>2026-08-11T18:07:18.3894618Z</Created>
     <ExportSetting>WithDefaults</ExportSetting>
     <InstalledProducts>
       <Product>
         <DisplayName>Totally Integrated Automation Portal</DisplayName>
-        <DisplayVersion>V20</DisplayVersion>
+        <DisplayVersion>V17</DisplayVersion>
       </Product>
       <OptionPackage>
         <DisplayName>TIA Portal Openness</DisplayName>
-        <DisplayVersion>V20</DisplayVersion>
+        <DisplayVersion>V17</DisplayVersion>
       </OptionPackage>
       <OptionPackage>
         <DisplayName>TIA Portal Version Control Interface</DisplayName>
-        <DisplayVersion>V20</DisplayVersion>
+        <DisplayVersion>V17</DisplayVersion>
       </OptionPackage>
       <Product>
         <DisplayName>SINAMICS Startdrive Advanced</DisplayName>
-        <DisplayVersion>V20</DisplayVersion>
+        <DisplayVersion>V17</DisplayVersion>
       </Product>
       <OptionPackage>
         <DisplayName>SINAMICS Startdrive G130, G150, S120, S150, SINAMICS MV, G220, S200, S210</DisplayName>
-        <DisplayVersion>V20</DisplayVersion>
+        <DisplayVersion>V17</DisplayVersion>
       </OptionPackage>
       <OptionPackage>
         <DisplayName>SINAMICS Startdrive G110M, G120, G120C, G120D, G120P, G115D</DisplayName>
-        <DisplayVersion>V20</DisplayVersion>
+        <DisplayVersion>V17</DisplayVersion>
       </OptionPackage>
       <Product>
         <DisplayName>STEP 7 Professional</DisplayName>
-        <DisplayVersion>V20</DisplayVersion>
+        <DisplayVersion>V17</DisplayVersion>
       </Product>
       <OptionPackage>
         <DisplayName>STEP 7 Safety</DisplayName>
-        <DisplayVersion>V20</DisplayVersion>
+        <DisplayVersion>V17</DisplayVersion>
       </OptionPackage>
       <Product>
         <DisplayName>WinCC Basic/Comfort/Advanced</DisplayName>
-        <DisplayVersion>V20</DisplayVersion>
+        <DisplayVersion>V17</DisplayVersion>
       </Product>
       <Product>
         <DisplayName>WinCC Unified</DisplayName>
-        <DisplayVersion>V20</DisplayVersion>
+        <DisplayVersion>V17</DisplayVersion>
       </Product>
     </InstalledProducts>
   </DocumentInfo>
@@ -54,7 +54,7 @@
       <HeaderFamily />
       <HeaderName />
       <HeaderVersion>0.1</HeaderVersion>
-      <Interface><Sections xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v5">
+      <Interface><Sections xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v4">
   <Section Name="Input" />
   <Section Name="Output" />
   <Section Name="InOut" />
@@ -170,7 +170,7 @@ At this point the motor will go back to idle. And the Stop button will be enable
       </MultilingualText>
       <SW.Blocks.CompileUnit ID="3" CompositionName="CompileUnits">
         <AttributeList>
-          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v5">
+          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v4">
   <Parts>
     <Access Scope="GlobalVariable" UId="21">
       <Symbol>
@@ -429,7 +429,7 @@ At this point the motor will go back to idle. And the Stop button will be enable
       </SW.Blocks.CompileUnit>
       <SW.Blocks.CompileUnit ID="8" CompositionName="CompileUnits">
         <AttributeList>
-          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v5">
+          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v4">
   <Parts>
     <Access Scope="GlobalVariable" UId="21">
       <Symbol>
@@ -619,7 +619,7 @@ At this point the motor will go back to idle. And the Stop button will be enable
       </SW.Blocks.CompileUnit>
       <SW.Blocks.CompileUnit ID="D" CompositionName="CompileUnits">
         <AttributeList>
-          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v5">
+          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v4">
   <Parts>
     <Access Scope="GlobalVariable" UId="21">
       <Symbol>
@@ -1286,7 +1286,7 @@ At this point the motor will go back to idle. And the Stop button will be enable
       </SW.Blocks.CompileUnit>
       <SW.Blocks.CompileUnit ID="12" CompositionName="CompileUnits">
         <AttributeList>
-          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v5">
+          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v4">
   <Parts>
     <Access Scope="GlobalVariable" UId="21">
       <Symbol>
@@ -1454,7 +1454,7 @@ At this point the motor will go back to idle. And the Stop button will be enable
       </SW.Blocks.CompileUnit>
       <SW.Blocks.CompileUnit ID="17" CompositionName="CompileUnits">
         <AttributeList>
-          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v5">
+          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v4">
   <Parts>
     <Access Scope="GlobalVariable" UId="21">
       <Symbol>
@@ -1680,7 +1680,7 @@ At this point the motor will go back to idle. And the Stop button will be enable
       </SW.Blocks.CompileUnit>
       <SW.Blocks.CompileUnit ID="1C" CompositionName="CompileUnits">
         <AttributeList>
-          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v5">
+          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v4">
   <Parts>
     <Access Scope="GlobalVariable" UId="21">
       <Symbol>
@@ -1803,7 +1803,7 @@ At this point the motor will go back to idle. And the Stop button will be enable
       </SW.Blocks.CompileUnit>
       <SW.Blocks.CompileUnit ID="21" CompositionName="CompileUnits">
         <AttributeList>
-          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v5">
+          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v4">
   <Parts>
     <Access Scope="GlobalVariable" UId="21">
       <Symbol>
@@ -1985,7 +1985,7 @@ At this point the motor will go back to idle. And the Stop button will be enable
       </SW.Blocks.CompileUnit>
       <SW.Blocks.CompileUnit ID="26" CompositionName="CompileUnits">
         <AttributeList>
-          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v5">
+          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v4">
   <Parts>
     <Access Scope="GlobalVariable" UId="21">
       <Symbol>
@@ -2111,7 +2111,7 @@ At this point the motor will go back to idle. And the Stop button will be enable
       </SW.Blocks.CompileUnit>
       <SW.Blocks.CompileUnit ID="2B" CompositionName="CompileUnits">
         <AttributeList>
-          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v5">
+          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v4">
   <Parts>
     <Access Scope="GlobalVariable" UId="21">
       <Symbol>
@@ -2192,7 +2192,7 @@ At this point the motor will go back to idle. And the Stop button will be enable
       </SW.Blocks.CompileUnit>
       <SW.Blocks.CompileUnit ID="30" CompositionName="CompileUnits">
         <AttributeList>
-          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v5">
+          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v4">
   <Parts>
     <Access Scope="GlobalVariable" UId="21">
       <Symbol>
@@ -2363,7 +2363,7 @@ At this point the motor will go back to idle. And the Stop button will be enable
       </SW.Blocks.CompileUnit>
       <SW.Blocks.CompileUnit ID="35" CompositionName="CompileUnits">
         <AttributeList>
-          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v5">
+          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v4">
   <Parts>
     <Access Scope="GlobalVariable" UId="21">
       <Symbol>
@@ -2444,7 +2444,7 @@ At this point the motor will go back to idle. And the Stop button will be enable
       </SW.Blocks.CompileUnit>
       <SW.Blocks.CompileUnit ID="3A" CompositionName="CompileUnits">
         <AttributeList>
-          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v5">
+          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v4">
   <Parts>
     <Access Scope="GlobalVariable" UId="21">
       <Symbol>
@@ -2543,7 +2543,7 @@ At this point the motor will go back to idle. And the Stop button will be enable
       </SW.Blocks.CompileUnit>
       <SW.Blocks.CompileUnit ID="3F" CompositionName="CompileUnits">
         <AttributeList>
-          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v5">
+          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v4">
   <Parts>
     <Access Scope="GlobalVariable" UId="21">
       <Symbol>

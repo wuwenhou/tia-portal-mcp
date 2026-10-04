@@ -16,10 +16,10 @@ using TiaOpennessMcpServer.Utilities;
 // ── Assembly resolver — must run before any Siemens type is referenced ────────
 string[] TiaSearchPaths = new[]
 {
-    @"C:\Program Files\Siemens\Automation\Portal V20\PublicAPI\V20",
-    @"C:\Program Files\Siemens\Automation\Portal V20\Bin\PublicAPI",
-    @"C:\Program Files\Siemens\Automation\Portal V20\Bin\PublicAPI\Client",
-    @"C:\Program Files\Siemens\Automation\Portal V20\Bin",
+    @"C:\Program Files\Siemens\Automation\Portal V17\PublicAPI\V17",
+    @"C:\Program Files\Siemens\Automation\Portal V17\Bin\PublicAPI",
+    @"C:\Program Files\Siemens\Automation\Portal V17\Bin\PublicAPI\Client",
+    @"C:\Program Files\Siemens\Automation\Portal V17\Bin",
 };
 AppDomain.CurrentDomain.AssemblyResolve += (_, e) =>
 {
@@ -71,8 +71,8 @@ var standardTools = new HashSet<string>(liteTools, StringComparer.OrdinalIgnoreC
     "get_project_signature", "get_block_attributes", "patch_block_texts",
     "create_tag_table", "create_tag", "export_block", "export_tag_table",
     "get_device", "get_io_mapping",
-    "list_hmi_tag_tables", "get_hmi_tags", "get_all_hmi_tags", "create_hmi_tags",
-    "list_hmi_screens", "get_screen_tag_refs", "update_faceplate_tags",
+    // HMI tools (list_hmi_*, get_screen_tag_refs, update_faceplate_tags, create_hmi_tags)
+    // are compiled in only with HMI_UNIFIED (WinCC Unified installed); excluded here.
 };
 
 // readonly = look, never edit. Opt-in (--profile readonly); the default profile
@@ -84,8 +84,7 @@ var readonlyTools = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
     "read_block", "compile_block", "analyze_block", "analyze_scl",
     "list_tag_tables", "get_tags", "get_device", "get_io_mapping",
     "get_project_signature", "get_block_attributes", "get_option_packages",
-    "list_hmi_tag_tables", "get_hmi_tags", "get_all_hmi_tags",
-    "list_hmi_screens", "get_screen_tag_refs",
+    // HMI tools (list_hmi_*, get_screen_tag_refs) need HMI_UNIFIED; excluded here.
 };
 
 // Tools that only read the project. Used for the MCP readOnlyHint annotation.
@@ -97,7 +96,8 @@ readOnlyHintTools.UnionWith(new[] { "export_block", "export_tag_table" }); // wr
 var destructiveHintTools = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
 {
     "write_block_scl", "import_block_xml", "import_tag_table", "patch_block_texts",
-    "batch_rename_tags", "update_faceplate_tags", "close_project",
+    "batch_rename_tags", "close_project",
+    // "update_faceplate_tags" also destroys content, but only exists with HMI_UNIFIED.
 };
 
 // --annotations (or TIA_MCP_ANNOTATIONS=1) adds MCP tool annotations to
@@ -122,8 +122,10 @@ services.AddSingleton<HardwareService>();
 services.AddSingleton<SoftwareService>();
 services.AddSingleton<SclAnalyzerService>();
 services.AddSingleton<TagService>();
+#if HMI_UNIFIED // requires WinCC Unified (see csproj TiaHmi); off for plain V17
 services.AddSingleton<HmiTagService>();
 services.AddSingleton<HmiScreenService>();
+#endif
 
 var sp      = services.BuildServiceProvider();
 var tia     = sp.GetRequiredService<TiaPortalService>();
@@ -131,8 +133,10 @@ var hw      = sp.GetRequiredService<HardwareService>();
 var sw      = sp.GetRequiredService<SoftwareService>();
 var scl     = sp.GetRequiredService<SclAnalyzerService>();
 var tagSvc  = sp.GetRequiredService<TagService>();
+#if HMI_UNIFIED // requires WinCC Unified (see csproj TiaHmi); off for plain V17
 var hmiSvc      = sp.GetRequiredService<HmiTagService>();
 var hmiScreenSvc = sp.GetRequiredService<HmiScreenService>();
+#endif
 
 var mcpLog  = new List<McpLogEntry>();
 var mcpLock = new object();
@@ -409,7 +413,8 @@ async Task HandleAsync(HttpListenerContext ctx)
             catch (Exception ex) { await Json(res, new { error = ex.Message }); }
         }
 
-        // ── HMI tag tables (WinCC Unified) ───────────────────────────────────
+        // ── HMI tag tables (WinCC Unified; requires HMI_UNIFIED) ────────────
+#if HMI_UNIFIED
         else if (method == "GET" && TryMatch(path, "/api/devices/{device}/hmi/tags", out m))
         {
             try   { await Json(res, await hmiSvc.ListTagTablesAsync(m["device"])); }
@@ -488,6 +493,7 @@ async Task HandleAsync(HttpListenerContext ctx)
             try   { await Json(res, await hmiScreenSvc.GetScreenTagRefsAsync(m["device"], m["screen"])); }
             catch (Exception ex) { await Json(res, new { error = ex.Message }); }
         }
+#endif // HMI_UNIFIED
 
         // ── Batch rename tags ─────────────────────────────────────────────────
         else if (method == "POST" && TryMatch(path, "/api/devices/{device}/tags/{table}/rename", out m))
@@ -791,6 +797,7 @@ async Task<object?> McpDispatch(JsonElement p)
         // Every tool in this group already round-trips over the REST routes in
         // HandleAsync, so the service code below is exercised.
 
+#if HMI_UNIFIED // requires WinCC Unified (see csproj TiaHmi); off for plain V17
         case "list_hmi_tag_tables":  return await hmiSvc.ListTagTablesAsync(A("device"));
         case "get_hmi_tags":         return await hmiSvc.GetTagsAsync(A("device"), A("table"));
         case "get_all_hmi_tags":     return await hmiSvc.GetAllTagsAsync(A("device"));
@@ -802,6 +809,7 @@ async Task<object?> McpDispatch(JsonElement p)
         case "update_faceplate_tags":
             return await hmiScreenSvc.UpdateFaceplateTagsAsync(
                 A("device"), A("screen"), AList<FaceplateTagUpdate>("updates"));
+#endif // HMI_UNIFIED
         case "get_block_attributes": return await sw.GetBlockAttributeInfosAsync(A("device"), A("block"));
         case "patch_block_texts":
             await sw.PatchBlockTextsAsync(A("device"), A("block"),
@@ -887,7 +895,7 @@ string McpToolName(object def) =>
 
 List<object> McpToolDefs() => new()
 {
-    McpT("connect_to_tia_portal", "Attaches to a running TIA Portal V20 process with an open project.",
+    McpT("connect_to_tia_portal", "Attaches to a running TIA Portal V17 process with an open project.",
         McpP("projectPath", "string", false, "Optional project path to prefer a specific instance")),
     McpT("get_status",   "Returns connection state and details about the currently open TIA Portal project."),
     McpT("save_project", "Saves the currently open TIA Portal project."),
@@ -981,7 +989,8 @@ List<object> McpToolDefs() => new()
             McpP("from", "string", true, "Current tag name"),
             McpP("to",   "string", true, "New tag name"))),
 
-    // ── HMI (WinCC Unified) ───────────────────────────────────────────────────
+    // ── HMI (WinCC Unified; requires HMI_UNIFIED — excluded from V17 builds) ─
+#if HMI_UNIFIED
     McpT("list_hmi_tag_tables", "Lists WinCC Unified HMI tag tables on an HMI device, with tag counts.",
         McpP("device", "string", true, "HMI device name as shown in TIA Portal (often 'HMI')")),
     McpT("get_hmi_tags", "Returns the tags in one WinCC Unified HMI tag table.",
@@ -1014,6 +1023,7 @@ List<object> McpToolDefs() => new()
             McpP("containerName", "string", true, "Faceplate container name on the screen"),
             McpP("parameterName", "string", true, "Interface parameter to set"),
             McpP("newValue",      "string", true, "New value, usually a tag name"))),
+#endif // HMI_UNIFIED
 
     // ── Block inspection ──────────────────────────────────────────────────────
     McpT("get_block_attributes", "Lists every readable and writable attribute and composition on a block. Use to discover what set_* operations are possible.",
@@ -1033,7 +1043,7 @@ List<object> McpToolDefs() => new()
     McpT("open_project",
         "Opens a TIA Portal project file from disk, starting a portal instance if none is running. "
       + "Prefer connect_to_tia_portal when the user already has the project open.",
-        McpP("path",     "string",  true,  "Full path to the .ap20 project file"),
+        McpP("path",     "string",  true,  "Full path to the .ap17 project file"),
         McpP("headless", "boolean", false, "Open without the TIA Portal UI (default true)")),
     McpT("close_project",
         "Closes the open project. Unsaved changes are lost unless the server is configured to auto-save, "

@@ -23,7 +23,7 @@ public static class XmlHelper
         try
         {
             var doc = XDocument.Parse(xmlContent);
-            XNamespace ns = "http://www.siemens.com/automation/Openness/SW/Interface/v5";
+            XNamespace ns = "http://www.siemens.com/automation/Openness/SW/Interface/v4";
 
             var sourceElement = doc.Descendants()
                 .FirstOrDefault(e => e.Name.LocalName == "Source" &&
@@ -75,7 +75,7 @@ public static class XmlHelper
         return $"""
             <?xml version="1.0" encoding="utf-8"?>
             <Document>
-              <Engineering version="V20" />
+              <Engineering version="V17" />
               <SW.Blocks.{blockType} ID="0"{number}>
                 <AttributeList>
                   <AutoNumber>false</AutoNumber>
@@ -94,13 +94,13 @@ public static class XmlHelper
                       <ProgrammingLanguage>SCL</ProgrammingLanguage>
                     </AttributeList>
                   </SW.Blocks.CompileUnit>
-                  <Section xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v5" Name="Input" />
-                  <Section xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v5" Name="Output" />
-                  <Section xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v5" Name="InOut" />
-                  <Section xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v5" Name="Static" />
-                  <Section xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v5" Name="Temp" />
-                  <Section xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v5" Name="Constant" />
-                  <Section xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v5" Name="Return" />
+                  <Section xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v4" Name="Input" />
+                  <Section xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v4" Name="Output" />
+                  <Section xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v4" Name="InOut" />
+                  <Section xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v4" Name="Static" />
+                  <Section xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v4" Name="Temp" />
+                  <Section xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v4" Name="Constant" />
+                  <Section xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v4" Name="Return" />
                   <Source Name="BlockSource">{encodedSource}</Source>
                 </ObjectList>
               </SW.Blocks.{blockType}>
@@ -142,12 +142,12 @@ public static class XmlHelper
         return $"""
             <?xml version="1.0" encoding="utf-8"?>
             <Document>
-              <Engineering version="V20" />
+              <Engineering version="V17" />
               <SW.Blocks.GlobalDB ID="0"{number}>
                 <AttributeList>
                   <AutoNumber>{autoNum}</AutoNumber>
                   <Interface>
-                    <Sections xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v5">
+                    <Sections xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v4">
                       <Section Name="Static">
             {memberXml}
                       </Section>
@@ -203,7 +203,7 @@ public static class XmlHelper
         return $"""
             <?xml version="1.0" encoding="utf-8"?>
             <Document>
-              <Engineering version="V20" />
+              <Engineering version="V17" />
               <SW.Blocks.InstanceDB ID="0">
                 <AttributeList>
                   <AutoNumber>{autoNum}</AutoNumber>
@@ -258,7 +258,7 @@ public static class XmlHelper
         return $"""
             <?xml version="1.0" encoding="utf-8"?>
             <Document>
-              <Engineering version="V20" />
+              <Engineering version="V17" />
               <SW.Tags.PlcTagTable ID="0" CompositionName="TagTables">
                 <AttributeList>
                   <Name>{SecurityElement.Escape(tableName)}</Name>

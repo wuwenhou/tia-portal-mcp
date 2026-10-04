@@ -904,7 +904,7 @@ function showDocCapabilities() {
 function showDocTiaApi() {
   setContent(`${docBack()}
     <div class="section-title">⚡ TIA Openness API Reference</div>
-    <p class="doc-p">Key types and namespaces from <span class="doc-inline">Siemens.Engineering.dll</span> (TIA Portal V20). All calls must originate from an STA thread via <span class="doc-inline">StaTaskScheduler</span>.</p>
+    <p class="doc-p">Key types and namespaces from <span class="doc-inline">Siemens.Engineering.dll</span> (TIA Portal V17). All calls must originate from an STA thread via <span class="doc-inline">StaTaskScheduler</span>.</p>
 
     <div class="doc-h2">PlcBlock class hierarchy</div>
     <p class="doc-p">All logic blocks inherit from <span class="doc-inline">PlcBlock</span>. The subclass tree determines which extra properties are available.</p>
@@ -1076,10 +1076,10 @@ IF tOn.Q THEN // 2s elapsed END_IF;</pre>`);
 const TOOLS = [
   // ── Connection
   { id:'connect', cat:'Connection', icon:'🔌', name:'connect_to_tia_portal',
-    desc:'Attaches to a running TIA Portal V20 process. TIA Portal must already be open with a project loaded. Optionally specify a project path to prefer a specific instance.',
+    desc:'Attaches to a running TIA Portal V17 process. TIA Portal must already be open with a project loaded. Optionally specify a project path to prefer a specific instance.',
     endpoint:'POST /api/connect',
     params:[
-      { id:'projectPath', label:'projectPath', req:false, type:'string', placeholder:'C:\\Projects\\MyProject.ap20', hint:'Optional — leave blank to auto-detect' }
+      { id:'projectPath', label:'projectPath', req:false, type:'string', placeholder:'C:\\Projects\\MyProject.ap17', hint:'Optional — leave blank to auto-detect' }
     ],
     invoke: async (v) => api('POST','/api/connect', v.projectPath ? {projectPath:v.projectPath} : undefined)
   },

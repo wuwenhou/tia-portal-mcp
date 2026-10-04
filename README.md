@@ -1,6 +1,12 @@
-# TIA Portal Dashboard
+# TIA Portal Dashboard — V17 Edition
 
-A desktop app that lets you read and edit your TIA Portal V20 project through a built-in browser window — no extra software or cloud connection needed. It connects to TIA Portal while it's running on your PC and opens a native Windows window at startup.
+> **Port of [hadefuwa/tia-portal-mcp](https://github.com/hadefuwa/tia-portal-mcp) for TIA Portal V17.**
+> The upstream project targets TIA Portal V20; this fork retargets it to the V17 Openness API
+> (`Portal V17\PublicAPI\V17`, SimaticML `v4` schemas, `.ap17` projects).
+> Core tools (blocks, SCL, LAD, tags, compile, clone, MCP) are carried over; the 7 WinCC Unified HMI
+> tools are compiled out (see *HMI support* below) because this machine has no WinCC Unified V17 option.
+
+A desktop app that lets you read and edit your TIA Portal V17 project through a built-in browser window — no extra software or cloud connection needed. It connects to TIA Portal while it's running on your PC and opens a native Windows window at startup.
 
 > **Who is this for?** Anyone working with Siemens S7 PLCs who wants a faster way to browse blocks, view/edit SCL code, inspect tag tables, and manage their project — without clicking through TIA Portal menus. It also exposes all tools to Claude AI via MCP so you can describe changes in plain English and have Claude implement them.
 
@@ -31,7 +37,7 @@ Both modes talk to the same REST server and the same TIA Portal connection.
 | **Compile blocks** | Trigger compilation and see the result inline |
 | **Analyse SCL** | Scan SCL code for issues (unbalanced blocks, nested IFs, etc.) |
 | **Create blocks** | Generate new FB, FC, OB, or GlobalDB from SCL source |
-| **Create LAD blocks** | Build an FB, FC or OB from a structured rung description (contacts, coils, set/reset, compares, edge detection, timers, counters, Sr/Rs, arithmetic, scaling, parallel branches, move, FB/FC calls, system functions); imported and compiled for you, compiler output returned. Verified on TIA V20 / S7-1200 |
+| **Create LAD blocks** | Build an FB, FC or OB from a structured rung description (contacts, coils, set/reset, compares, edge detection, timers, counters, Sr/Rs, arithmetic, scaling, parallel branches, move, FB/FC calls, system functions); imported and compiled for you, compiler output returned. Ported for TIA V17 / S7-1200 — SimaticML `v4` schema (was `v5` upstream); live re-verification pending |
 | **Create instance DBs** | Create a new Instance DB linked to any FB |
 | **Patch block texts** | Update a block's title, comment, and per-network titles without touching logic |
 | **Block attribute inspector** | List all readable/writable attributes and compositions on any block |
@@ -42,11 +48,11 @@ Both modes talk to the same REST server and the same TIA Portal connection.
 | **Export blocks & tags** | Export any block or tag table to SimaticML XML on disk |
 | **I/O mapping** | List a device's I/O points — module, channel, address, direction |
 | **Generate an S7-1200** | Build a new station from a CPU variant, signal modules, and a PROFINET address |
-| **HMI tag tables** | List WinCC Unified tag tables and tag counts for any HMI device |
-| **HMI tag export** | Export all HMI tags with PLC connections, data types, and table assignments |
-| **HMI tag creation** | Create HMI tags in bulk. Internal by default; per tag set `bindPlc: true` with `plcTag` and `connection` to link it to a PLC tag |
-| **HMI screens** | List screens and every tag each screen references |
-| **Faceplate parameters** | Repoint a faceplate instance's interface parameters at different tags |
+| **HMI tag tables** *(excluded — needs WinCC Unified, see below)* | List WinCC Unified tag tables and tag counts for any HMI device |
+| **HMI tag export** *(excluded)* | Export all HMI tags with PLC connections, data types, and table assignments |
+| **HMI tag creation** *(excluded)* | Create HMI tags in bulk. Internal by default; per tag set `bindPlc: true` with `plcTag` and `connection` to link it to a PLC tag |
+| **HMI screens** *(excluded)* | List screens and every tag each screen references |
+| **Faceplate parameters** *(excluded)* | Repoint a faceplate instance's interface parameters at different tags |
 | **Project signature** | Full index of every block and tag table across all devices |
 | **Clone project** | Duplicate the open project to a new folder with all hardware, blocks, and tags |
 | **Used products** | List the products/option packs the project references (e.g. StartDrive, Safety) |
@@ -60,7 +66,7 @@ Both modes talk to the same REST server and the same TIA Portal connection.
 Before you start, make sure you have:
 
 - **Windows 10 or 11** (TIA Portal only runs on Windows)
-- **Siemens TIA Portal V20** installed and licensed
+- **Siemens TIA Portal V17** installed and licensed (STEP 7 V17 + Openness option; WinCC Unified V17 is *optional* — see *HMI support*)
 - **Your account added to the `Siemens TIA Openness` Windows group** (see setup step 3)
 - **Microsoft Edge** installed (comes with Windows 10/11 — needed for the built-in browser window)
 - **.NET Framework 4.8** — already included in Windows 10/11, nothing to install
@@ -75,8 +81,8 @@ Before you start, make sure you have:
 Open PowerShell and run:
 
 ```bash
-git clone https://github.com/hadefuwa/tia-portal-mcp.git
-cd tia-portal-mcp
+git clone https://github.com/wuwenhou/tia-portal-mcp.git tia-portal-mcp-v17
+cd tia-portal-mcp-v17
 ```
 
 ### 2. Build the project
@@ -104,7 +110,7 @@ TIA Portal requires your Windows account to be in a specific security group befo
 
 ### 4. Run the dashboard
 
-1. Open your project in **TIA Portal V20**
+1. Open your project in **TIA Portal V17**
 2. Double-click `TiaPortalDashboard.exe`
 3. A native desktop window opens with the dashboard inside it
 4. Click **Connect to TIA Portal** — the dashboard reads your open project
@@ -166,17 +172,18 @@ Create (or edit) `C:\Users\<you>\.claude\.mcp.json`:
 | Flag | Effect |
 |---|---|
 | `--mcp-stdio` | Speak MCP over stdin/stdout instead of starting the dashboard and HTTP listener |
-| `--project <path>` | Open a `.ap20` project at startup, so the session doesn't spend its first tool call connecting |
+| `--project <path>` | Open a `.ap17` project at startup, so the session doesn't spend its first tool call connecting |
 | `--with-ui` | With `--project`, open TIA Portal visibly instead of headless |
 | `--profile lite\|standard\|full` | Trim the advertised tool surface (default `full`). Also settable via the `TIA_MCP_PROFILE` environment variable |
 
-**Tool profiles.** The server exposes 38 tools, and 38 tool definitions is a lot of context to spend before the model has done anything. Pick the smallest surface that covers your session:
+**Tool profiles.** The server exposes 32 tools (7 WinCC Unified HMI tools excluded — see *HMI support* below). Pick the smallest surface that covers your session:
 
 | Profile | Tools | Contains |
 |---|---|---|
 | `lite` | 10 | Connect, browse devices/blocks/tags, read and write SCL, compile, save |
-| `standard` | 33 | Everything except project lifecycle and hardware generation |
-| `full` | 38 | Everything, including `open_project`, `close_project`, `clone_project`, `get_option_packages`, `generate_s7_1200` |
+| `standard` | 27 | Everything except project lifecycle and hardware generation |
+| `full` | 32 | Everything, including `open_project`, `close_project`, `clone_project`, `get_option_packages`, `generate_s7_1200` |
+| `readonly` | 15 | Look, never edit |
 
 Out-of-profile tools are refused at dispatch as well as hidden from `tools/list`, so a model that guesses a name still can't call it.
 
@@ -187,7 +194,7 @@ A fully-specified entry looks like this:
   "mcpServers": {
     "tia-portal": {
       "command": "C:\\path\\to\\TiaPortalDashboard.exe",
-      "args": ["--mcp-stdio", "--profile", "standard", "--project", "C:\\Projects\\MyPlant.ap20"]
+      "args": ["--mcp-stdio", "--profile", "standard", "--project", "C:\\Projects\\MyPlant.ap17"]
     }
   }
 }
@@ -215,13 +222,33 @@ The dashboard exposes all tools over MCP (Model Context Protocol) on `http://loc
 
 ### Step 2 — Verify tools appear
 
-Start a new conversation in Claude Desktop. Click the tools/hammer icon — you should see all 38 TIA Portal tools listed. If they don't appear, see the MCP troubleshooting section below.
+Start a new conversation in Claude Desktop. Click the tools/hammer icon — you should see all 32 TIA Portal tools listed. If they don't appear, see the MCP troubleshooting section below.
 
 ### What the server reports
 
 - **URL**: `http://localhost:5000/mcp`
 - **Protocol version**: MCP `2025-03-26` (with automatic fallback to `2024-11-05` for older clients)
 - **Transport**: Streamable HTTP (POST to `/mcp`)
+
+---
+
+## HMI support (WinCC Unified) — excluded in this build
+
+The 7 HMI tools (`list_hmi_tag_tables`, `get_hmi_tags`, `get_all_hmi_tags`, `create_hmi_tags`,
+`list_hmi_screens`, `get_screen_tag_refs`, `update_faceplate_tags`) and their REST routes
+(`/api/devices/{device}/hmi/...`) are **compiled out** of the V17 build because the
+`Siemens.Engineering.HmiUnified` Openness API only exists when the **WinCC Unified V17** option is
+installed — and it is not installed on this machine.
+
+The code is intact, guarded by `#if HMI_UNIFIED` in `Program.cs`, `HmiTagService.cs` and
+`HmiScreenService.cs`. To re-enable after installing WinCC Unified V17:
+
+```bash
+dotnet build src/TiaOpennessMcpServer/TiaOpennessMcpServer.csproj -c Release -p:TiaHmi=true
+```
+
+No code changes needed — the `TiaHmi` property in the `.csproj` defines `HMI_UNIFIED` and compiles
+the HMI services, routes, MCP tools and profile entries back in (full profile goes back to 39 tools).
 
 ---
 
@@ -245,7 +272,7 @@ Your project has UDT changes that haven't been compiled. In TIA Portal, press **
 This is handled automatically by the clone feature. If you see it in other operations, disconnect from TIA Portal and reconnect.
 
 **Build fails with "Siemens.Engineering.dll not found"**
-The project expects TIA Portal V20 at the default path (`C:\Program Files\Siemens\Automation\Portal V20`). If yours is installed elsewhere, update the `HintPath` entries in the `.csproj` file.
+The project expects TIA Portal V17 at the default path (`C:\Program Files\Siemens\Automation\Portal V17`). If yours is installed elsewhere, update the `HintPath` entries in the `.csproj` file.
 
 **The window doesn't open / WebView2 error**
 Make sure Microsoft Edge is installed and up to date. The built-in browser window uses the Edge WebView2 runtime, which ships with Edge on Windows 10/11.
@@ -306,7 +333,8 @@ src/TiaOpennessMcpServer/
 │   ├── SoftwareService.cs      # Blocks — list, read, write SCL, write XML, compile, patch texts
 │   ├── HardwareService.cs      # Device enumeration
 │   ├── TagService.cs           # PLC tag tables
-│   ├── HmiTagService.cs        # WinCC Unified HMI tag tables and tags
+│   ├── HmiTagService.cs        # WinCC Unified HMI tag tables and tags (HMI_UNIFIED only)
+│   ├── HmiScreenService.cs     # WinCC Unified screens/faceplates (HMI_UNIFIED only)
 │   └── SclAnalyzerService.cs   # SCL static analysis
 ├── Models/                     # Data transfer objects
 └── Utilities/
@@ -315,7 +343,7 @@ src/TiaOpennessMcpServer/
     └── NetFxPolyfills.cs       # C# 9/11 types missing from net48
 ```
 
-### REST API — HMI tag endpoints
+### REST API — HMI tag endpoints (HMI_UNIFIED builds only — excluded here, see *HMI support*)
 
 | Method | Path | Description |
 |--------|------|-------------|
