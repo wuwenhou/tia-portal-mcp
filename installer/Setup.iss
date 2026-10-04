@@ -6,7 +6,7 @@
 ;   2. Delete installer\staging\*.pdb and installer\staging\TiaPortalDashboard.exe.WebView2\
 ;   3. ISCC.exe installer\Setup.iss   ->  dist\TiaPortalMCP-V17-Setup.exe
 #define MyAppName "TIA Portal MCP V17"
-#define MyAppVersion "1.0.0"
+#define MyAppVersion "1.0.1"
 #define MyAppExe "TiaPortalDashboard.exe"
 
 [Setup]

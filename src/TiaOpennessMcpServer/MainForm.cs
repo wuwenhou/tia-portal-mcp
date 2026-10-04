@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using Microsoft.Web.WebView2.WinForms;
 
@@ -43,7 +44,31 @@ public class MainForm : Form
 
     private async void OnLoad(object sender, EventArgs e)
     {
-        await _webView.EnsureCoreWebView2Async(null);
+        // WebView2 needs a writable user-data folder. The default location is
+        // next to the exe — which fails with E_ACCESSDENIED when installed in
+        // Program Files. Use %LOCALAPPDATA% instead (always writable).
+        try
+        {
+            var dataDir = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "TiaPortalMcpV17", "WebView2");
+            Directory.CreateDirectory(dataDir);
+            var env = await Microsoft.Web.WebView2.Core.CoreWebView2Environment.CreateAsync(null, dataDir);
+            await _webView.EnsureCoreWebView2Async(env);
+        }
+        catch (Exception ex)
+        {
+            // Dashboard stays usable: the built-in HTTP server also serves
+            // dashboard.html at /, so fall back to the default browser
+            // instead of crashing with a JIT dialog.
+            MessageBox.Show(
+                "Could not start the embedded browser view:\n" + ex.Message.Split('\n')[0] +
+                "\n\nOpening the dashboard in your default browser instead.",
+                "TIA Portal Dashboard", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            try { System.Diagnostics.Process.Start("http://localhost:5000"); }
+            catch { /* last resort: user can open the URL by hand */ }
+            return;
+        }
         _webView.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
         _webView.Source = new Uri("http://localhost:5000");
     }
